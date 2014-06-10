@@ -1,0 +1,11 @@
+=== [ topic ][ setup ][ 1 ] ===
+[ --- start ---- ]
+HTTP Server (net/http)
+Url routing (built-in + mux)
+Templates (html/template)
+Cookies ( http://gorilla-web.appspot.com/pkg/securecookie)
+Databases (MySQL, PostgreSQL, MongoDB, Redis)
+Oauth (https://github.com/garyburd/go-oauth)
+JSON and XML support - http://golang.org/pkg/encoding/json/
+Amazon S3 (https://launchpad.net/goamz)
+[ ---  end  ---- ]

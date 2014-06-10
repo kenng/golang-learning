@@ -1,0 +1,57 @@
+=== [ topic ][ intro ] ===
+[ --- start ---- ]
+go help
+
+2. Freenode IRC, #go-nuts
+http://freenode.net/
+[ ---  end  ---- ]
+
+=== [ topic ][ install ] ===
+[ --- start ---- ]
+1. download
+https://code.google.com/p/go/wiki/Downloads?tm=2
+
+2. extract
+`tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz`
+
+3. in ~/.bashrc, insert:
+export PATH=$PATH:/usr/local/go/bin
+
+4. create a sample app and compile
+`go run hello.go`
+[ ---  end  ---- ]
+
+=== [ topic ][ build ] ===
+[ --- start ---- ]
+set -o nounset
+set -o errexit
+set -o pipefail
+
+go build -o apptranslator_app *.go
+./apptranslator_app
+[ ---  end  ---- ]
+=== [ topic ][ hello world ] ===
+[ --- start ---- ]
+@@@ hello.go:
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Printf("Hello, world.\n")
+}
+[ ---  end  ---- ]
+
+=== [ topic ][ loop ][ for ] ===
+[ --- start ---- ]
+1.
+for row := range bigDigits[0] {
+- is same as - 
+for row := 0; row < len(bigDigits[0]); row++ {
+
+2. infinite loop
+for {
+  /// run forever
+}
+[ ---  end  ---- ]
+
