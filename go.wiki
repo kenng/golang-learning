@@ -55,3 +55,141 @@ for {
 }
 [ ---  end  ---- ]
 
+=== [ topic ][ list ] ===
+[ --- start ---- ]
+import "container/list"
+for e := l.Front(); e != nil; e = e.Next() {
+	// do something with e.Value
+}
+[ ---  end  ---- ]
+
+=== [ topic ][ array ] ===
+[ --- start ---- ]
+{{{class="prettyprint go"
+  var my_array [2]int;
+  b := [2]string{"Penn", "Teller"}
+  a3 := [...]int{3, 1, 5} // An array of 3 ints, initialized
+}}}
+
+[ ---  end  ---- ]
+
+=== [ topic ][ slices ] ===
+[ --- start ---- ]
+func make([]T, len, cap) []T
+{{{class="prettyprint go"
+  var s []byte
+  s = make([]byte, 5, 5)
+  //   - or -
+  s := make([]byte, 5)
+}}}
+
+- length and capacity
+len(s) == 5
+cap(s) == 5
+
+{{{class="prettyprint go"
+  a := make([]int, 1)
+  // a == []int{0}
+  a = append(a, 1, 2, 3)
+  // a == []int{0, 1, 2, 3}
+}}}
+
+{{{class="prettyprint go"
+  a := []string{"John", "Paul"}
+  b := []string{"George", "Ringo", "Pete"}
+  a = append(a, b...) //equivalent to "append(a, b[0], b[1], b[2])"
+  // a == []string{"John", "Paul", "George", "Ringo", "Pete"}
+}}}
+
+Title: slicing
+- Slicing does not copy the slice's data. 
+- It creates a new slice value that points to the original array.
+{{{class="prettyprint go"
+  b := []byte{'g', 'o', 'l', 'a', 'n', 'g'}
+  // b[1:4] == []byte{'o', 'l', 'a'}, sharing the same storage as b
+  // b[:2] == []byte{'g', 'o'}
+  // b[2:] == []byte{'l', 'a', 'n', 'g'}
+  // b[:] == b
+}}}
+
+{{{class="prettyprint go"
+  d := []byte{'r', 'o', 'a', 'd'}
+  e := d[2:] 
+  // e == []byte{'a', 'd'}
+  e[1] = 'm'
+  // e == []byte{'a', 'm'}
+  // d == []byte{'r', 'o', 'a', 'm'}
+}}}
+
+{{{class="prettyprint go"
+  var slice []byte = buffer[100:150]  // 100 to 149
+  slice := buffer[100:150]
+  slice = slice[1:len(slice)-1]  // drop 1st and last elem
+}}}
+
+type sliceHeader struct {
+    Length        int
+    ZerothElement *byte
+}
+
+slice := sliceHeader{
+    Length:        50,
+    ZerothElement: &buffer[100],
+}
+[ ---  end  ---- ]
+
+=== [ topic ][ string ][ concat ] ===
+[ --- start ---- ]
+s += "adfa" + " another "
+{{{class="prettyprint go"
+  s := []string{"this", "is", "a", "joined", "string\n"};
+  fmt.Printf(strings.Join(s, " "));
+}}}
+
+{{{class="prettyprint go"
+  package main
+
+  import (
+      "bytes"
+      "fmt"
+  )
+
+  func main() {
+      var buffer bytes.Buffer
+
+      for i := 0; i < 1000; i++ {
+          buffer.WriteString("a")
+      }
+
+      fmt.Println(buffer.String())
+  }
+}}}
+[ ---  end  ---- ]
+
+
+=== [ topic ][ string ][ to integer ] ===
+[ --- start ---- ]
+t := strconv.Itoa(123)
+[ ---  end  ---- ]
+=== [ topic ][ exec ] ===
+[ --- start ---- ]
+out, err := exec.Command("sh","-c",cmd).Output()
+
+{{{class="prettyprint go"
+  func exe_cmd(cmd string, wg *sync.WaitGroup) {
+  fmt.Println("command is ",cmd)
+  // splitting head => g++ parts => rest of the command
+  parts := strings.Fields(cmd)
+  head := parts[0]
+  parts = parts[1:len(parts)]
+
+  out, err := exec.Command(head,parts...).Output()
+  if err != nil {
+    fmt.Printf("%s", err)
+  }
+  fmt.Printf("%s", out)
+  wg.Done() // Need to signal to waitgroup that this goroutine is done
+}
+}}}
+[ ---  end  ---- ]
+
